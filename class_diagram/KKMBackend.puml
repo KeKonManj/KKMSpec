@@ -6,8 +6,8 @@ class Recipe{
     - m_name: std::string
     - m_plate: Plate
     - m_season: int
-    - m_dayTime: int
-    - m_plateType: PlateType
+    - m_dayTime: enum
+    - m_plateType: enum
     - m_portionSize: int
     - m_ingredients: std::vector<RecipeIngredient>
     - m_prepTime: int
@@ -25,6 +25,7 @@ class Plate{
     - m_dayTime: int
     - m_plateType: PlateType
     - m_portionSize: int
+    - m_expireDate: std::chrono
 }
 
 class Stock{
@@ -40,18 +41,34 @@ class Ingredient{
 
 class StockIngredient{
     - m_name: std::string
-    - m_expireDate: Date
+    - m_expireDate: std::chrono
     ---
 }
 
 class RecipeIngredient{
-    - m_name
+    - m_name: std::string
+    - m_quantity: Quantity
+    ---
 }
 
-Recipe "1"--"1" Plate
+class Quantity{
+    - m_unit: std::string
+    - m_value: float
+    ---
+}
+
+class ShoppingList{
+    - m_ingredients: std::vector<RecipeIngredient>
+    ---
+}
+
 StockIngredient --|> Ingredient
 RecipeIngredient --|> Ingredient
-StockIngredient "1"--"1" Date
-
+Recipe "1"--"1" Plate
+Stock "1"--"n" Plate
+Stock "1"--"n" StockIngredient
+Recipe "n"--"n" RecipeIngredient
+ShoppingList "0,1"--"n" RecipeIngredient
+RecipeIngredient "1"--"1" Quantity
 
 @enduml
