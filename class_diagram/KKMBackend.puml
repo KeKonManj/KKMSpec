@@ -36,7 +36,7 @@ class Plate{
     - m_dayTime: enum
     - m_plateType: enum
     - m_portionSize: float
-    - m_expireDate: std::chrono
+    - m_expireDate: std::chrono:year_month_day
     ---
     + eatPortion(float): void
 }
@@ -57,7 +57,7 @@ class Ingredient{
 
 class StockIngredient{
     - m_name: std::string
-    - m_expireDate: std::chrono
+    - m_expireDate: std::chrono::year_month_day
     - m_quantity: Quantity
     ---
 }
