@@ -4,6 +4,7 @@
 ' same for constructors
 class Recipe{
     - m_name: std::string
+    - m_kitchen: Kitchen
     - m_plate: Plate
     - m_season: int
     - m_dayTime: enum
@@ -14,24 +15,39 @@ class Recipe{
     - m_cookTime: int
     - m_totalTime: int
     ---
-    + isfeasibleWithStock(Stock): bool
+    + isfeasibleWithStock(): bool
+    + checkMissingIngredients(): std::vector<RecipeIngredient>
+    + addMissingToList(): void
 }
 
+class Kitchen{
+    - m_name: std::string
+    - m_stock: Stock
+    - m_library: std::vector<Recipe>
+    ---
+    + addToStock(StockIngredient): void
+    + addRecipe(Recipe): void
+}
 
 class Plate{
     - m_name: std::string
     - m_recipe: Recipe
     - m_season: int
-    - m_dayTime: int
-    - m_plateType: PlateType
-    - m_portionSize: int
+    - m_dayTime: enum
+    - m_plateType: enum
+    - m_portionSize: float
     - m_expireDate: std::chrono
+    ---
+    + eatPortion(float): void
 }
 
 class Stock{
     - m_ingredients: std:vector<StockIngredient>
     - m_plates: std::vector<Plate>
+    - m_kitchen: Kitchen
     ---
+    + addToStock(Ingredient): void
+    + removeFromStock(Ingredient): void
 }
 
 class Ingredient{
@@ -42,6 +58,7 @@ class Ingredient{
 class StockIngredient{
     - m_name: std::string
     - m_expireDate: std::chrono
+    - m_quantity: Quantity
     ---
 }
 
@@ -60,6 +77,9 @@ class Quantity{
 class ShoppingList{
     - m_ingredients: std::vector<RecipeIngredient>
     ---
+    - addToList(RecipeIngredient): void
+    - removeFromList(RecipeIngredient): void
+    - clear(): void
 }
 
 StockIngredient --|> Ingredient
@@ -70,5 +90,8 @@ Stock "1"--"n" StockIngredient
 Recipe "n"--"n" RecipeIngredient
 ShoppingList "0,1"--"n" RecipeIngredient
 RecipeIngredient "1"--"1" Quantity
+Kitchen "n"--"1" Recipe
+Kitchen "1"--"1" Stock
+StockIngredient "1"--"1" Quantity
 
 @enduml
