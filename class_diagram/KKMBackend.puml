@@ -1,0 +1,57 @@
+@startuml KKM Backend Data Model
+
+' getters and setters are not added to the class diagramm
+' same for constructors
+class Recipe{
+    - m_name: std::string
+    - m_plate: Plate
+    - m_season: int
+    - m_dayTime: int
+    - m_plateType: PlateType
+    - m_portionSize: int
+    - m_ingredients: std::vector<RecipeIngredient>
+    - m_prepTime: int
+    - m_cookTime: int
+    - m_totalTime: int
+    ---
+    + isfeasibleWithStock(Stock): bool
+}
+
+
+class Plate{
+    - m_name: std::string
+    - m_recipe: Recipe
+    - m_season: int
+    - m_dayTime: int
+    - m_plateType: PlateType
+    - m_portionSize: int
+}
+
+class Stock{
+    - m_ingredients: std:vector<StockIngredient>
+    - m_plates: std::vector<Plate>
+    ---
+}
+
+class Ingredient{
+    - m_name: std::string
+    ---
+}
+
+class StockIngredient{
+    - m_name: std::string
+    - m_expireDate: Date
+    ---
+}
+
+class RecipeIngredient{
+    - m_name
+}
+
+Recipe "1"--"1" Plate
+StockIngredient --|> Ingredient
+RecipeIngredient --|> Ingredient
+StockIngredient "1"--"1" Date
+
+
+@enduml
